@@ -31,13 +31,13 @@ func main() {
   if flag.Parse(); !flag.Parsed() {
     log.Panicf("Error with flags")
   }
-  if group == nil {
+  if group == nil || len(*group) == 0 {
     log.Panicf("Please specify name of autoscale group")
   }
 
   sess := session.Must(session.NewSession())
 
-  if awsConfig != nil && awsProfile != nil {
+  if awsConfig != nil && len(*awsConfig) == 0 && awsProfile != nil && len(*awsProfile) == 0 {
     sess.Config.Credentials = credentials.NewSharedCredentials(*awsConfig, *awsProfile)
   }
 
